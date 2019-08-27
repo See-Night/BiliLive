@@ -23,7 +23,7 @@ $ sudo /etc/init.d/mysql restart
 $ mysql -u root -p
 
 新建数据库
->> create database Bili_Comments character set 'utf8' collate 'utf8_general_ci';
+>> create database Monitor character set 'utf8' collate 'utf8_general_ci';
 >> exit;
 
 ```
