@@ -3,14 +3,14 @@
 		"headers": {
 			"Accept": "application/json, text/plain, */*",
 			"Origin": "https://space.bilibili.com",
-			"Referer": "https://space.bilibili.com/375504219",
+			"Referer": "https://space.bilibili.com/UID",
 			"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"
 		},
-		"url": "https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=375504219"
+		"url": "https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=UID"
 	},
 	"comments": {
 		"room": {
-			"roomid": "14917277",
+			"roomid": "ROOMID",
 			"csrf_token": "",
 			"csrf": "",
 			"visit_id": ""
@@ -20,9 +20,9 @@
 		"headers": {
 			"Accept": "application/json, text/plain, */*",
 			"Origin": "https://space.bilibili.com",
-			"Referer": "https://space.bilibili.com/375504219",
+			"Referer": "https://space.bilibili.com/UID",
 			"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"
 		},
-		"url": "https://api.bilibili.com/x/space/acc/info?mid=375504219&jsonp=jsonp"
+		"url": "https://api.bilibili.com/x/space/acc/info?mid=UID&jsonp=jsonp"
 	}
 }
