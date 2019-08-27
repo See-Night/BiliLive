@@ -1,4 +1,4 @@
-# .LiveMonitor
+# DDMonitor
 直播检测工具
 
 #### 需要mutt+msmtp支持。
