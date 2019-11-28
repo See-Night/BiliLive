@@ -14,7 +14,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 config_file = open(path + '/roomid.json', encoding = "utf-8")
 room = json.loads(config_file.read())['user']
 
-check = 'sudo ' + path + '/check'
+check = 'sudo ' + path + '/Monitor-check'
 try :
     while True:
         t = time.strftime('%Y-%m-%d',time.localtime(time.time()))
