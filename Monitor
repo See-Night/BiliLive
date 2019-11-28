@@ -2,7 +2,6 @@
 import json
 import os
 import time
-import pymysql
 import datetime
 
 liveon = '正在直播'
