@@ -1,7 +1,10 @@
-# DDMonitor
+DDMonitor
+==============================
 直播录播脚本
+------------------------------
 
-#### 需要streamlink+ffmpeg支持。
+#### 需要streamlink+ffmpeg支持。  
+#### 以下安装方法仅适用于Linux系统，Windows系统请自行解决
 
 安装：
 ```
