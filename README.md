@@ -5,7 +5,7 @@
 
 安装：
 ```
-$ sudo wget https://Dreammer123.github.io/Documents/DDMonitor/install
+$ sudo wget https://Dreammer12138.github.io/Documents/DDMonitor/install
 $ sudo ./install
 ```
 
