@@ -22,6 +22,8 @@ try :
         for uid in room :
             file_name = '{}_{}.mp4'.format(uid['nickname'], t)
             out = os.popen(check + " " + uid['uid']).read().strip()
+            if liveoff == out and record == 'off' :
+                print('正在监听{}'.format(uid['nickname']))
             if liveon == out and record == 'off' :
                 print("Start recording {} in {}".format(file_name, t))
                 record = 'on'
