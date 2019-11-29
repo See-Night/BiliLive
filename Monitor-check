@@ -4,9 +4,7 @@ import os
 import json
 import datetime
 import sys
-#from bs4 import BeautifulSoup as bs
 UID = sys.argv[1]
-#nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%s')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 live = 0
 
@@ -24,12 +22,6 @@ headers['Referer'] = config['headers']['Referer'].replace("UID", UID)
 headers['User-Agent'] = config['headers']['User-Agent']
 url = config['url'].replace("UID", UID)
 
-#headers['Accept'] = 'application/json, text/plain, */*'
-#headers['Origin'] = 'https://space.bilibili.com'
-#headers['Referer'] = 'https://space.bilibili.com/349991143'
-#headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
-
-#req = requests.get("https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=349991143")
 req = requests.get(url)
 result = req.json()['data']['live_status']
 if result == 1:
