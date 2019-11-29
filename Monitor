@@ -5,11 +5,15 @@ import time
 import sys
 import datetime
 
-if sys.argv[1] == "--update" :
+setInfo = sys.argv
+
+if "--update" in setInfo :
     os.system('cd /usr/DDMonitor')
     os.system('git pull')
     os.system('pip3 install --upgrade streamlink')
-    
+elif setInfo is None:
+    pass
+
 liveon = 'on'
 liveoff = 'off'
 
