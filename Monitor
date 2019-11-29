@@ -11,35 +11,33 @@ if "--update" in setInfo :
     os.system('cd /usr/DDMonitor')
     os.system('git pull')
     os.system('pip3 install --upgrade streamlink')
-elif setInfo is None:
-    pass
+else :
 
-liveon = 'on'
-liveoff = 'off'
+    liveon = 'on'
+    liveoff = 'off'
 
-record = 'off'
+    record = 'off'
 
-path = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.dirname(os.path.abspath(__file__))
 
-config_file = open(path + '/roomid.json', encoding = "utf-8")
-room = json.loads(config_file.read())['user']
+    config_file = open(path + '/roomid.json', encoding = "utf-8")
+    room = json.loads(config_file.read())['user']
 
-check = 'sudo ' + path + '/Monitor-check'
-try :
-    while True:
-        t = time.strftime('%Y-%m-%d',time.localtime(time.time()))
-        for uid in room :
-            file_name = '{}_{}.mp4'.format(uid['nickname'], t)
-            out = os.popen(check + " " + uid['uid']).read().strip()
-            if liveoff == out and record == 'off' :
-                print('正在监听{}'.format(uid['nickname']))
-            if liveon == out and record == 'off' :
-                print("Start recording {} in {}".format(file_name, t))
-                record = 'on'
-                os.system('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name)
-            elif liveoff == out :
-                record = 'off'
-        time.sleep(300)
-except Exception as e:
-    with open("log.txt", "a") as log :
-        log.write("{}发生错误,错误信息:{}".format(datetime.now(), e))
+    check = 'sudo ' + path + '/Monitor-check'
+    try :
+        while True:
+            t = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+            for uid in room :
+                file_name = '{}_{}.mp4'.format(uid['nickname'], t)z()
+                if liveoff == out and record == 'off' :
+                    print('正在监听{}'.format(uid['nickname']))
+                if liveon == out and record == 'off' :
+                    print("Start recording {} in {}".format(file_name, t))
+                    record = 'on'
+                    os.system('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name)
+                elif liveoff == out :
+                    record = 'off'
+            time.sleep(300)
+    except Exception as e:
+        with open("log.txt", "a") as log :
+            log.write("{}发生错误,错误信息:{}".format(datetime.now(), e))
