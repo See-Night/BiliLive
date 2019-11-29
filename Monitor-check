@@ -25,6 +25,7 @@ url = config['url'].replace("UID", UID)
 
 req = requests.get(url)
 result = req.json()['data']['live_status']
+
 if result == 1:
 	print("on")
 	changelive(1)	
