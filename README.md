@@ -5,9 +5,9 @@ DDMonitor
 
 #### 需要streamlink+ffmpeg支持。  
 #### 以下安装方法仅适用于Linux系统，Windows系统请自行解决  
-ffmpeg
+> ffmpeg
 > http://www.ffmpeg.org/download.html  
-streamlink  
+> streamlink  
 > https://streamlink.github.io/  
 
 安装：
