@@ -27,7 +27,7 @@ $ sudo vim /usr/DDMonitor/roomid.json
 将文件中的uid改成直播间号码，nickname改成主播ID  
 {
 	"user": [{
-		"uid": "",		<-这里在双引号中填写直播间号码
+		"uid": "",			<-这里在双引号中填写直播间号码
 		"nickname": ""		<-这里在双引号中填写主播的ＩＤ
 	}]
 }
