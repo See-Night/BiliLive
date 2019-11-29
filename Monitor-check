@@ -11,6 +11,7 @@ live = 0
 def changelive(l):
 	global live
 	live = l
+
 config_file = open(BASE_DIR + '/config.json', encoding = "utf-8")
 config = json.loads(config_file.read())['check']
 
@@ -25,14 +26,11 @@ url = config['url'].replace("UID", UID)
 req = requests.get(url)
 result = req.json()['data']['live_status']
 if result == 1:
-	print("正在直播")
-	#os.system("sudo ./auto_get.sh start")
+	print("on")
 	changelive(1)	
 else:
-	print("直播停止")
+	print("off")
 	if live == 1:
-		#os.system("sudo ./auto_get.sh stop")
 		changelive(0)
 	else:
 		pass
-		#print("cccc")

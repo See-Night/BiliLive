@@ -10,8 +10,8 @@ if sys.argv[1] == "--update" :
     os.system('git pull')
     os.system('pip3 install --upgrade streamlink')
     
-liveon = '正在直播'
-liveoff = '直播停止'
+liveon = 'on'
+liveoff = 'off'
 
 record = 'off'
 
