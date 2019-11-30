@@ -19,8 +19,8 @@ $ sudo ./install
 启动：
 `$ ./Monitor`  
 更新：
-`$ ./Monitor --update`  
-更改监视直播间：
+`$ ./Monitor --upgrade`  
+更改监视直播间： 
 ```
 直播间信息在roomid.json文件中储存，修改前请及时进行备份  
 $ sudo vim /usr/DDMonitor/roomid.json
@@ -33,4 +33,10 @@ $ sudo vim /usr/DDMonitor/roomid.json
 }
 保存退出，启动Monitor
 ```
+  
+## Monitot 参数
+在Monitor命令后面添加参数可以修改一些默认设置
+* `-l / --log path` 设置log的储存位置  
+* `--upgrade` 更新  
+  
 #### 建议将路径添加到环境变量中
