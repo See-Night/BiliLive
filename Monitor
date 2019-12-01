@@ -17,6 +17,19 @@ config_file = open(path + '/roomid.json', encoding = "utf-8")
 room = json.loads(config_file.read())['user']
 check = 'sudo ' + path + '/Monitor-check'
 
+#网络检测
+try :
+    net = os.system("ping -c 4 -q live.bilibili.com")
+    if net :
+        print("Network connect failed, Please check the network enviroment")
+        sys.exit()
+    else :
+        pass
+except Exception as e :
+    sys.exit()
+    log.write("[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]{}发生错误,错误信息:{}\n".format(datetime.now(), e))
+
+#参数检测
 try:
     for opt, val in opts :
         if opt in ("-l", "--log") :
@@ -28,6 +41,7 @@ try:
 except getopt.GetoptError as e:
     sys.exit()
 
+#循环监听
 try :
     while True:
         log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
