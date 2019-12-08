@@ -12,6 +12,7 @@ liveoff = 'off'
 record = 'off'
 path = os.path.dirname(os.path.abspath(__file__))
 log_out = path
+logis = 0
 
 config_file = open(path + '/roomid.json', encoding = "utf-8")
 room = json.loads(config_file.read())['user']
@@ -44,25 +45,28 @@ except getopt.GetoptError as e:
 #循环监听
 try :
     while True:
-        log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
-
-        t = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+        t = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(time.time()))
+        log = ""
         for uid in room :
             file_name = '{}_{}.mp4'.format(uid['nickname'], t)
             out = os.popen(check + " " + uid['uid']).read().strip()
-            if liveoff == out and record == 'off' :
+            if liveoff == out and record == 'off' and logis == 0 :
+                log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
                 print('正在监听{}'.format(uid['nickname']))
                 log += "正在监听{}".format(uid['nickname'])
+                logis = 1
+                log += "\n"
             if liveon == out and record == 'off' :
+                log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
                 print("Start recording {} in {}".format(file_name, t))
                 record = 'on'
                 log += os.popen('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name).read().strip()
+                logis = 0
+                log += '\n'
             elif liveoff == out :
                 record = 'off'
-            logfile = open(log_out + "/log", encoding = 'utf-8', mode = 'a+')
-            log += "\n"
-            logfile.write(log)
-        time.sleep(300)
+        logfile = open(log_out + '/log', encoding = 'utf-8', mode = 'a+')
+        logfile.write(log)
 except Exception as e:
-    with open("log", "a+") as log :
-        log.write("[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]{}发生错误,错误信息:{}\n".format(datetime.now(), e))
+    with open(log_out + '/log', "a+") as log :
+        log.write("[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]{}发生错误,错误信息:{}\n".format(time.localtime(time.time()), e))
