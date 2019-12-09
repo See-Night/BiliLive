@@ -7,16 +7,12 @@ import datetime
 
 opts, args = getopt.getopt(sys.argv[1:], "l:", ["log=", "upgrade"])
 
-liveon = 'on'
-liveoff = 'off'
 record = 'off'
 path = os.path.dirname(os.path.abspath(__file__))
 log_out = path
-logis = 0
 
 config_file = open(path + '/roomid.json', encoding = "utf-8")
 room = json.loads(config_file.read())['user']
-check = 'sudo ' + path + '/Monitor-check'
 
 #网络检测
 try :
@@ -49,21 +45,16 @@ try :
         log = ""
         for uid in room :
             file_name = '{}_{}.mp4'.format(uid['nickname'], t)
-            out = os.popen(check + " " + uid['uid']).read().strip()
-            if liveoff == out and record == 'off' and logis == 0 :
-                log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
+            stream_url = "streamlink --stream-url {}".format("https://live.bilibili.com/{}".format(uid['uid']))
+            if os.popen(stream_url).read().strip().split(':')[0] == 'error' and record == "off" :
                 print('正在监听{}'.format(uid['nickname']))
-                log += "正在监听{}".format(uid['nickname'])
-                logis = 1
-                log += "\n"
-            if liveon == out and record == 'off' :
-                log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]"
+            if os.popen(stream_url).read().strip().split(':')[0] != 'error' and record == 'off' :
+                log = "[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]" + "Start recording {}".format(file_name) + "\n"
                 print("Start recording {} in {}".format(file_name, t))
                 record = 'on'
-                log += os.popen('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name).read().strip()
-                logis = 0
-                log += '\n'
-            elif liveoff == out :
+                os.system('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name)
+                print('streamlink -O https://live.bilibili.com/' + uid['uid'] + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb /mnt/harddisk/video/Kaguramea/' + file_name)
+            elif os.popen('ps -ef | grep {} | grep -v "grep" | awk "{print $2}"').read().strip() == "" :
                 record = 'off'
         logfile = open(log_out + '/log', encoding = 'utf-8', mode = 'a+')
         logfile.write(log)
