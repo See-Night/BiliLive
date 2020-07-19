@@ -26,8 +26,6 @@ try:
     for opt, val in opts :
         if opt in ("-r", "--room") :
             room = val
-        else:
-            sys.exit()
         if opt in ("-o", "--outpath") :
             path = val
 except getopt.GetoptError as e:
