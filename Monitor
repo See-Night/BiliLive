@@ -4,6 +4,7 @@ import os
 import time
 import sys, getopt
 import datetime
+import requests
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
 
@@ -35,14 +36,15 @@ except getopt.GetoptError as e:
 try :
     while True:
         t = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(time.time()))
-        file_name = '{}_{}.mp4'.format(room, t)
         stream_url = "streamlink --stream-url {}".format("https://live.bilibili.com/{}".format(room))
         if os.popen(stream_url).read().strip().split(':')[0] == 'error' and record == "off":
             _log_info_ = '正在监听{}'.format(room)
             print(_log_info_)
         if os.popen(stream_url).read().strip().split(':')[0] != 'error' and record == 'off' :
-            print("Start recording {} in {}".format(file_name, t))
             record = 'on'
+            title = json.loads(requests.get('https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id={}'.format(room)).text)['data']['room_info']['title']
+            file_name = '{}_{}.mp4'.format(title, t)
+            print("Start recording {} in {}".format(file_name, t))
             os.system('streamlink -O https://live.bilibili.com/' + room + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb {}/'.format(path) + file_name)
         elif os.popen('ps -ef | grep "streamlink -O" | grep -v "grep" | awk \'{print $2}\'').read().strip() == "" and record == 'on' :
             record = 'off'
