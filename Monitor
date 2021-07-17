@@ -1,52 +1,95 @@
 #!/usr/bin/python3
-import json
-import os
-import time
-import sys, getopt
-import datetime
-import requests
+import getopt, sys, datetime, os, time
+from bilibili_api import live, sync
+import aiohttp
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
-
-record = 'off'
-
-#网络检测
-try :
-    net = os.system("ping -c 4 -q live.bilibili.com")
-    if net :
-        print("Network connect failed, Please check the network enviroment")
-        sys.exit()
-    else :
-        pass
-except Exception as e :
-    sys.exit()
-    log.write("[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]{}发生错误,错误信息:{}\n".format(datetime.now(), e))
 
 #参数检测
 try:
     for opt, val in opts :
         if opt in ("-r", "--room") :
             room = val
+            print('[DDMonitor] Start Room {}'.format(room))
         if opt in ("-o", "--outpath") :
-            path = val
+            path = os.path.abspath(val)
+            print('[DDMonitor] Output Directory {}'.format(path))
 except getopt.GetoptError as e:
     sys.exit()
 
-#循环监听
-try :
-    while True:
-        t = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(time.time()))
-        stream_url = "streamlink --stream-url {}".format("https://live.bilibili.com/{}".format(room))
-        if os.popen(stream_url).read().strip().split(':')[0] == 'error' and record == "off":
-            _log_info_ = '正在监听{}'.format(room)
-            print(_log_info_)
-        if os.popen(stream_url).read().strip().split(':')[0] != 'error' and record == 'off' :
-            record = 'on'
-            title = json.loads(requests.get('https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id={}'.format(room)).text)['data']['room_info']['title']
-            file_name = '{}_{}.mp4'.format(title, t)
-            print("Start recording {} in {}".format(file_name, t))
-            os.system('streamlink -O https://live.bilibili.com/' + room + ' best | ffmpeg -loglevel error -i pipe:0 -vcodec copy -acodec copy -vbsf h264_mp4toannexb {}/'.format(path) + file_name)
-        elif os.popen('ps -ef | grep "streamlink -O" | grep -v "grep" | awk \'{print $2}\'').read().strip() == "" and record == 'on' :
-            record = 'off'
-except Exception as e:
-    print("[" + time.strftime('%Y-%m-%d %H:%M:%S') + "]{}发生错误,错误信息:{}\n".format(time.localtime(time.time()), e))
+async def connectCheck(room):
+    r = live.LiveRoom(room)
+    return (await r.get_room_play_info())['live_status']
+
+async def recordLive(room, path):
+    r = live.LiveRoom(room)
+    streamInfo = await r.get_room_play_url()
+    url = streamInfo['durl'][0]['url']
+
+    title = (await r.get_room_info())['room_info']['title']
+
+    filename = '{}_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d'), title)
+
+    async with aiohttp.ClientSession() as sess:
+        async with sess.get(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}) as resp:
+            with open('{}/{}.flv'.format(path, filename), 'ab') as f:
+                byteCount = 0
+                now = datetime.datetime.now()
+                nb = byteCount
+                speed = '0B/s'
+                while True:
+                    chunk = await resp.content.read(1024)
+                    if not chunk:
+                        print('无更多数据')
+                        break
+
+                    byteCount += len(chunk)
+                    if byteCount >= 1073741824:
+                        stdout = '{}G'.format(round(byteCount/1073741824, 2))
+                    elif byteCount >= 1048576:
+                        stdout = '{}M'.format(round(byteCount/1048576, 2))
+                    elif byteCount >= 1024:
+                        stdout = '{}K'.format(round(byteCount/1024, 2))
+                    else:
+                        stdout = '{}B'.format(round(byteCount, 2))
+
+                    interval = datetime.datetime.now()
+                    if (interval - now).seconds >= 1:
+                        now = interval
+                        flow = byteCount - nb
+                        if flow > 1073741824:
+                            speed = '{}G/s'.format(round(flow/1073741824, 2))
+                        elif flow > 1048576:
+                            speed = '{}M/s'.format(round(flow/1048576, 2))
+                        elif flow > 1024:
+                            speed = '{}K/s'.format(round(flow/1024, 2))
+                        else:
+                            speed = '{}B/s'.format(round(flow, 2))
+                        nb = byteCount
+                    print(
+                        '[DDMonitor] Recorded {:8s} @ {:10s}'.format(
+                            stdout, 
+                            speed
+                        ), 
+                        end="\r", 
+                        file=sys.stdout,
+                        flush=True
+                    )
+                    f.write(chunk)
+            print('[DDMonitor] Save to {}/{}.flv'.format(path, filename))
+    return
+
+while True:
+    try:
+        liveStatus = sync(connectCheck(room))
+        if liveStatus == 1:
+            print('[DDMonitor] {}'.format('Live Start'))
+            try:
+                sync(recordLive(room, path))
+                print('[DDMonitor] Live Closed')
+            except KeyboardInterrupt:
+                print('\r[DDMonitor] Error {}'.format('You Stoped Recording'))
+        time.sleep(120)
+    except KeyboardInterrupt:
+        print('\r[DDMonitor] Stop Monitor')
+        break
