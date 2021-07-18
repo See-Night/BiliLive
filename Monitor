@@ -1,7 +1,18 @@
 #!/usr/bin/python3
+
+"""
+DD Monitor —— a CLI script that record live stream automatically
+
+Params:
++ -r/--room :   Live room id
++ -o/--outpath: Video save path
+"""
+
+import asyncio
 import getopt, sys, datetime, os, time
 from bilibili_api import live, sync
 import aiohttp
+import requests
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
 
@@ -10,16 +21,27 @@ try:
     for opt, val in opts :
         if opt in ("-r", "--room") :
             room = val
-            print('[DDMonitor] Start Room {}'.format(room))
+            print('[DD Monitor] Start Room {}'.format(room))
         if opt in ("-o", "--outpath") :
             path = os.path.abspath(val)
-            print('[DDMonitor] Output Directory {}'.format(path))
+            print('[DD Monitor] Output Directory {}'.format(path))
 except getopt.GetoptError as e:
     sys.exit()
 
 async def connectCheck(room):
     r = live.LiveRoom(room)
     return (await r.get_room_play_info())['live_status']
+
+def formatByte(Byte):
+    if Byte >= 1073741824:
+        res = '{}G'.format(round(Byte/1073741824, 2))
+    elif Byte >= 1048576:
+        res = '{}M'.format(round(Byte/1048576, 2))
+    elif Byte >= 1024:
+        res = '{}K'.format(round(Byte/1024, 2))
+    else:
+        res = '{}B'.format(round(Byte, 2))
+    return res
 
 async def recordLive(room, path):
     r = live.LiveRoom(room)
@@ -30,66 +52,48 @@ async def recordLive(room, path):
 
     filename = '{}_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d'), title)
 
-    async with aiohttp.ClientSession() as sess:
-        async with sess.get(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}) as resp:
-            with open('{}/{}.flv'.format(path, filename), 'ab') as f:
-                byteCount = 0
-                now = datetime.datetime.now()
+    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}, stream=True)
+
+    with open('{}/{}.flv'.format(path, filename), 'wb') as f:
+        byteCount = 0
+        now = datetime.datetime.now()
+        nb = byteCount
+        speed = '0B/s'
+        for data in response.iter_content(chunk_size=1024):
+            byteCount += len(data)
+            stdout = formatByte(byteCount)
+
+            interval = datetime.datetime.now()
+            if (interval - now).seconds >= 1:
+                now = interval
+                flow = byteCount - nb
+                speed = '{}/s'.format(formatByte(flow))
                 nb = byteCount
-                speed = '0B/s'
-                while True:
-                    chunk = await resp.content.read(1024)
-                    if not chunk:
-                        print('无更多数据')
-                        break
-
-                    byteCount += len(chunk)
-                    if byteCount >= 1073741824:
-                        stdout = '{}G'.format(round(byteCount/1073741824, 2))
-                    elif byteCount >= 1048576:
-                        stdout = '{}M'.format(round(byteCount/1048576, 2))
-                    elif byteCount >= 1024:
-                        stdout = '{}K'.format(round(byteCount/1024, 2))
-                    else:
-                        stdout = '{}B'.format(round(byteCount, 2))
-
-                    interval = datetime.datetime.now()
-                    if (interval - now).seconds >= 1:
-                        now = interval
-                        flow = byteCount - nb
-                        if flow > 1073741824:
-                            speed = '{}G/s'.format(round(flow/1073741824, 2))
-                        elif flow > 1048576:
-                            speed = '{}M/s'.format(round(flow/1048576, 2))
-                        elif flow > 1024:
-                            speed = '{}K/s'.format(round(flow/1024, 2))
-                        else:
-                            speed = '{}B/s'.format(round(flow, 2))
-                        nb = byteCount
-                    print(
-                        '[DDMonitor] Recorded {:8s} @ {:10s}'.format(
-                            stdout, 
-                            speed
-                        ), 
-                        end="\r", 
-                        file=sys.stdout,
-                        flush=True
-                    )
-                    f.write(chunk)
-            print('[DDMonitor] Save to {}/{}.flv'.format(path, filename))
+            print(
+                '[DD Monitor] Recorded {:>8s} @ {:10s}'.format(
+                    stdout,
+                    speed
+                ),
+                end="\r",
+                file=sys.stdout,
+                flush=True
+            )
+            f.write(data)
+            f.flush()
+    print('[DD Monitor] Save to {}/{}.flv'.format(path, filename))
     return
 
 while True:
     try:
         liveStatus = sync(connectCheck(room))
         if liveStatus == 1:
-            print('[DDMonitor] {}'.format('Live Start'))
+            print('[DD Monitor] {}'.format('Live Start'))
             try:
                 sync(recordLive(room, path))
-                print('[DDMonitor] Live Closed')
+                print('[DD Monitor] Live Closed')
             except KeyboardInterrupt:
-                print('\r[DDMonitor] Error {}'.format('You Stoped Recording'))
+                print('\r\033[K[DD Monitor] Error You Stoped Recording')
         time.sleep(120)
     except KeyboardInterrupt:
-        print('\r[DDMonitor] Stop Monitor')
+        print('\r[DD Monitor] Stop Monitor')
         break
