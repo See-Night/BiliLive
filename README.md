@@ -1,6 +1,6 @@
 # DDMonitor
 
-[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://nodejs.org)
+[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org)
 
 DDMonitor 是一个基于Python的Bilibili直播自动录制脚本，它使用了[@Passkou]('https://github.com/Passkou')开发的[bilibili-api](https://github.com/Passkou/bilibili-api)项目（顺手也抄了点代码🤣）。
 
