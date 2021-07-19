@@ -18,7 +18,7 @@ $ git clone https://github.com/See-Night/DDMonitor.git
 
 ## 安装依赖
 
-DDMonitor仅依赖于[bilibili-api](https://github.com/Passkou/bilibili-api)和[aiohttp](https://docs.aiohttp.org)，你只需要安装这两个依赖就可以。
+DDMonitor仅依赖于[bilibili-api](https://github.com/Passkou/bilibili-api)，你只需要安装这两个依赖就可以。
 
 ```bash
 $ pip3 install bilibili-api aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple
