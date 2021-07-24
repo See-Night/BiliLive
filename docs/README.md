@@ -1,6 +1,6 @@
 # DDMonitor
 
-[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red)
 
 DDMonitor 是一个基于Python的Bilibili直播自动录制脚本。
 
@@ -18,7 +18,7 @@ $ git clone https://github.com/See-Night/DDMonitor.git
 
 ## 安装依赖
 
-DDMonitor仅依赖于[bilibili-api](https://github.com/Passkou/bilibili-api)，你只需要安装这两个依赖就可以。
+DDMonitor仅依赖于[bilibili-api](https://github.com/Passkou/bilibili-api)。
 
 ```bash
 $ pip3 install bilibili-api aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple
