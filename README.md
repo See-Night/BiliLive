@@ -1,6 +1,6 @@
 # DDMonitor
 
-[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red)
 
 DDMonitor 是一个基于Python的Bilibili直播自动录制脚本。
 
@@ -49,7 +49,7 @@ $ ./Monitor -r 12235923 -o "D:\Video"
 
 这个命令让脚本监听 `12235923` 直播间，当开始直播以后进行录制，并保存到 `D:\Video` 路径下。
 
-!> 脚本运行时不能关闭命令行，否则脚本会自动停止工作。
+> 脚本运行时不能关闭命令行，否则脚本会自动停止工作。
 
 ## Docker 容器
 
