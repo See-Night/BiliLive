@@ -1,11 +1,40 @@
 #!/usr/bin/python3
-
-"""
-DD Monitor —— a CLI script that record live stream automatically
+# -*- coding: utf-8 -*-
+# @Time     : 2021/07/24
+# @Author   : See-Night
+# @Blog     : https://1145141919810.wang
+# @License  : MIT license
+"""DD Monitor —— a CLI script that record live stream automatically
 
 Params:
 + -r/--room :   Live room id
 + -o/--outpath: Video save path
+
+Example:
+$ ./Monitor -r 12235923 -o ~/videos
+"""
+
+"""MIT License
+
+Copyright (c) 2021 Dreammer12138
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 import asyncio
@@ -16,23 +45,56 @@ import requests
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
 
+print('[DD Monitor] Monitor Start')
+
 #参数检测
 try:
     for opt, val in opts :
         if opt in ("-r", "--room") :
             room = val
-            print('[DD Monitor] Start Room {}'.format(room))
+            print('[DD Monitor] Room ID \033[1m{}\033[0m'.format(room))
         if opt in ("-o", "--outpath") :
             path = os.path.abspath(val)
-            print('[DD Monitor] Output Directory {}'.format(path))
+            print('[DD Monitor] Output Path \033[1m{}\033[0m'.format(path))
 except getopt.GetoptError as e:
     sys.exit()
 
+
 async def connectCheck(room):
+    """ Check the connection status
+ 
+    You need to provide a roomid to the function so that it can 
+    detect the connection status and generate a status code.
+
+    Args:
+        room: Live room's id
+
+    Returns:
+        A number named status code will be returned.
+        It has 3 different value:
+        - 0: Live is closed
+        - 1: Live is started
+        - 2: Live is not closed but it is rotating 
+             from library that uploaded videos
+    """
     r = live.LiveRoom(room)
     return (await r.get_room_play_info())['live_status']
 
+
 def formatByte(Byte):
+    """ Format bytes as easy-to-read values
+
+    If you have a long bytes value, e.g., 516789154431byte, 
+    it looks diffcult to read. So it needs to be formated 
+    into an easy-to-read form.
+    
+    Args:
+        Byte: a byte value.
+
+    Returns:
+        A string that easy-to-read bytes value.
+        It will be formated into G/M/K/B four form.
+    """
     if Byte >= 1073741824:
         res = '{}G'.format(round(Byte/1073741824, 2))
     elif Byte >= 1048576:
@@ -43,7 +105,16 @@ def formatByte(Byte):
         res = '{}B'.format(round(Byte, 2))
     return res
 
+
 async def recordLive(room, path):
+    """ Record live stream
+
+    Record bilibili live stream accroding to setted roomid.
+
+    Args:
+        room: live room's id
+        path: the path where save files
+    """
     r = live.LiveRoom(room)
     streamInfo = await r.get_room_play_url()
     url = streamInfo['durl'][0]['url']
@@ -83,6 +154,7 @@ async def recordLive(room, path):
     print('[DD Monitor] Save to {}/{}.flv'.format(path, filename))
     return
 
+
 while True:
     try:
         liveStatus = sync(connectCheck(room))
@@ -95,5 +167,5 @@ while True:
                 print('\r\033[K[DD Monitor] Error You Stoped Recording')
         time.sleep(120)
     except KeyboardInterrupt:
-        print('\r[DD Monitor] Stop Monitor')
+        print('\r[DD Monitor] Monitor Stop')
         break
