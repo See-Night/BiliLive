@@ -47,8 +47,81 @@ import os
 import datetime
 import sys
 import getopt
+import json
 from typing import Any
-from bilibili_api import live, sync
+
+
+class Live:
+    api = {
+        "get_room_play_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getRoomPlayInfo?room_id={room_show_id}",
+        "get_room_play_url": "https://api.live.bilibili.com/xlive/web-room/v1/playUrl/playUrl?cid={room_id}&platform=web&qn=10000&https_url_req=1&ptype=16",
+        "get_room_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id={room_id}"
+    }
+
+
+    def __init__(self, roomid: str):
+        """Initialize the Live class
+
+        Args:
+            roomid: live room id that showed in url
+        """
+        self.roomid = roomid
+        self.roomid = self.get_room_play_info()['room_id']
+
+
+    def get_room_play_info(self) -> dict:
+        """Get live room play info
+
+        Returns:
+            A dict that contains the following live information:
+            - room_id: Live room real id
+            - short_id: Live room short id (some UPs have special room shor id, it will show in url)
+            - uid: UPs' uid
+            - live_status: Live status (0 is closed, 1 is living, 2 is roteting videos)
+        """
+        res = json.loads(
+            requests.get(
+                self.api["get_room_play_info"].format(
+                    room_show_id=self.roomid
+                )
+            ).text
+        )['data']
+        return res
+
+    
+    def get_room_play_url(self) -> dict:
+        """Get live room play stream url
+
+        Returns:
+            A dict that contains the following stream information:
+            - current_qn: Video resolution
+            - quality_description: List of resolution
+            - durl: List of stream url
+        """
+        res = json.loads(
+            requests.get(
+                self.api["get_room_play_url"].format(
+                    room_id=self.roomid
+                )
+            ).text
+        )['data']
+        return res
+
+
+    def get_room_info(self) -> dict:
+        """Get room information
+
+        Returns:
+            A dict contains room information
+        """
+        res = json.loads(
+            requests.get(
+                self.api["get_room_info"].format(
+                    room_id=self.roomid
+                )
+            ).text
+        )['data']
+        return res
 
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
@@ -68,25 +141,7 @@ except getopt.GetoptError as e:
     sys.exit()
 
 
-async def connectCheck(room: str) -> str:
-    """ Check the connection status
- 
-    You need to provide a roomid to the function so that it can 
-    detect the connection status and generate a status code.
-
-    Args:
-        room: Live room's id
-
-    Returns:
-        A number named status code will be returned.
-        It has 3 different value:
-        - 0: Live is closed
-        - 1: Live is started
-        - 2: Live is not closed but it is rotating 
-             from library that uploaded videos
-    """
-    r = live.LiveRoom(room)
-    return (await r.get_room_play_info())['live_status']
+r = Live(room)
 
 
 def formatByte(Byte: str) -> str:
@@ -114,7 +169,7 @@ def formatByte(Byte: str) -> str:
     return res
 
 
-async def recordLive(room: str, path: str) -> Any:
+def recordLive(room: str, path: str) -> Any:
     """ Record live stream
 
     Record bilibili live stream accroding to setted roomid.
@@ -123,11 +178,11 @@ async def recordLive(room: str, path: str) -> Any:
         room: live room's id
         path: the path where save files
     """
-    r = live.LiveRoom(room)
-    streamInfo = await r.get_room_play_url()
+    global r
+    streamInfo = r.get_room_play_url()
     url = streamInfo['durl'][0]['url']
 
-    title = (await r.get_room_info())['room_info']['title']
+    title = r.get_room_info()['room_info']['title']
 
     filename = '{}_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d'), title)
 
@@ -163,18 +218,24 @@ async def recordLive(room: str, path: str) -> Any:
     return
 
 
-while True:
-    try:
-        print('[DD Monitor] {:20s}'.format('Monitor is working'))
-        liveStatus = sync(connectCheck(room))
-        if liveStatus == 1:
-            print('[DD Monitor] \033[1;32m● {}\033[0m'.format('Live Start'))
-            try:
-                sync(recordLive(room, path))
-                print('[DD Monitor] Live Closed')
-            except KeyboardInterrupt:
-                print('\r\033[K[DD Monitor] \033[1;31m● Error\033[0m You Stoped Recording')
-        time.sleep(120)
-    except KeyboardInterrupt:
-        print('\r[DD Monitor] Monitor Stop')
-        break
+def main():
+    global r
+    print('[DD Monitor] {:20s}'.format('Monitor is working'))
+    while True:
+        try:
+            liveStatus = r.get_room_play_info()['live_status']
+            if liveStatus == 1:
+                print('[DD Monitor] \033[1;32m● {}\033[0m'.format('Live Start'))
+                try:
+                    recordLive(room, path)
+                    print('[DD Monitor] Live Closed')
+                except KeyboardInterrupt:
+                    print('\r\033[K[DD Monitor] \033[1;31m● Error\033[0m You Stoped Recording')
+            time.sleep(120)
+        except KeyboardInterrupt:
+            print('\r[DD Monitor] Monitor Stop')
+            break
+
+
+if __name__ == "__main__":
+    main()
