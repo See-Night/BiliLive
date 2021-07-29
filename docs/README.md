@@ -18,10 +18,10 @@ $ git clone https://github.com/See-Night/DDMonitor.git
 
 ## 安装依赖
 
-DDMonitor仅依赖于[bilibili-api](https://github.com/Passkou/bilibili-api)。
+DDMonitor仅依赖于 `requests` 模块。
 
 ```bash
-$ pip3 install bilibili-api aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple
+$ pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 <small>在命令行中运行以上命令可以自动安装。</small>
