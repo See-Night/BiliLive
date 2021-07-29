@@ -1,9 +1,8 @@
-FROM alpine
+FROM python:3.7-alpine3.14
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
 
-RUN apk update && apk add python3 py3-pip python3-dev g++ gcc python3-dev tzdata libxml2-dev libxslt-dev libxml2 libxslt \
-    && pip3 install bilibili-api requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 WORKDIR /app
 
