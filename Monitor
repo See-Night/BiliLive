@@ -3,7 +3,7 @@
 # @Time     : 2021/07/24
 # @Author   : See-Night
 # @Blog     : https://1145141919810.wang
-# @License  : MIT license
+# @License  : MIT
 
 
 """DD Monitor —— a CLI script that record live stream automatically
