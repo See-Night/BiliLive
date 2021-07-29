@@ -184,11 +184,15 @@ def recordLive(room: str, path: str) -> Any:
 
     title = r.get_room_info()['room_info']['title']
 
-    filename = '{}_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d'), title)
+    filename = '{}_{}'.format(title, datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
 
     response = requests.get(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}, stream=True)
 
-    with open('{}/{}.flv'.format(path, filename), 'wb') as f:
+    with open('{path}/[{room_id}]{filename}.flv'.format(
+            path=path, 
+            room_id=r.roomid,  
+            filename=filename
+        ), 'wb') as f:
         byteCount = 0
         now = datetime.datetime.now()
         nb = byteCount
