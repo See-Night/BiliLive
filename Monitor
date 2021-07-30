@@ -120,7 +120,6 @@ class Live:
 
 
 opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
-print('[DD Monitor] Monitor Start')
 
 
 # 参数检测
@@ -137,6 +136,7 @@ except getopt.GetoptError as e:
 
 
 r = Live(room)
+print('[DD Monitor] Monitor Start')
 
 
 def formatByte(Byte: str) -> str:
