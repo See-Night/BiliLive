@@ -4,7 +4,7 @@
 
 DDMonitor 是一个基于Python的Bilibili直播自动录制脚本。
 
-在使用之前请确保你的设备上已经安装了[Python](https://python.org)环境。
+<strong style="color: red;">注意：</strong>在使用之前请确保你的设备上已经安装了[Python](https://python.org)环境。
 
 ## 获取脚本
 
