@@ -182,8 +182,14 @@ def recordLive(path: str) -> None:
     filename = '{}_{}'.format(
         title, datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
 
-    response = requests.get(url, headers={
-                            "User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}, stream=True)
+    response = requests.get(
+        url, 
+        headers={
+            "User-Agent": "Mozilla/5.0", 
+            "Referer": "https://www.bilibili.com/"
+        }, 
+        stream=True
+    )
 
     with open('{path}/[{room_id}]{filename}.flv'.format(
         path=path,
