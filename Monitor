@@ -41,6 +41,8 @@ SOFTWARE.
 """
 
 
+
+
 import requests
 import time
 import os
@@ -48,16 +50,12 @@ import datetime
 import sys
 import getopt
 import json
-from typing import Any
-
-
 class Live:
     api = {
         "get_room_play_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getRoomPlayInfo?room_id={room_show_id}",
         "get_room_play_url": "https://api.live.bilibili.com/xlive/web-room/v1/playUrl/playUrl?cid={room_id}&platform=web&qn=10000&https_url_req=1&ptype=16",
         "get_room_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id={room_id}"
     }
-
 
     def __init__(self, roomid: str):
         """Initialize the Live class
@@ -67,7 +65,6 @@ class Live:
         """
         self.roomid = roomid
         self.roomid = self.get_room_play_info()['room_id']
-
 
     def get_room_play_info(self) -> dict:
         """Get live room play info
@@ -88,7 +85,6 @@ class Live:
         )['data']
         return res
 
-    
     def get_room_play_url(self) -> dict:
         """Get live room play stream url
 
@@ -106,7 +102,6 @@ class Live:
             ).text
         )['data']
         return res
-
 
     def get_room_info(self) -> dict:
         """Get room information
@@ -128,13 +123,13 @@ opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
 print('[DD Monitor] Monitor Start')
 
 
-#参数检测
+# 参数检测
 try:
-    for opt, val in opts :
-        if opt in ("-r", "--room") :
+    for opt, val in opts:
+        if opt in ("-r", "--room"):
             room = val
             print('[DD Monitor] Room ID \033[1m{}\033[0m'.format(room))
-        if opt in ("-o", "--outpath") :
+        if opt in ("-o", "--outpath"):
             path = os.path.abspath(val)
             print('[DD Monitor] Output Path \033[1m{}\033[0m'.format(path))
 except getopt.GetoptError as e:
@@ -150,7 +145,7 @@ def formatByte(Byte: str) -> str:
     If you have a long bytes value, e.g., 516789154431byte, 
     it looks diffcult to read. So it needs to be formated 
     into an easy-to-read form.
-    
+
     Args:
         Byte: a byte value.
 
@@ -169,7 +164,7 @@ def formatByte(Byte: str) -> str:
     return res
 
 
-def recordLive(room: str, path: str) -> Any:
+def recordLive(path: str) -> None:
     """ Record live stream
 
     Record bilibili live stream accroding to setted roomid.
@@ -184,15 +179,17 @@ def recordLive(room: str, path: str) -> Any:
 
     title = r.get_room_info()['room_info']['title']
 
-    filename = '{}_{}'.format(title, datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
+    filename = '{}_{}'.format(
+        title, datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
 
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}, stream=True)
+    response = requests.get(url, headers={
+                            "User-Agent": "Mozilla/5.0", "Referer": "https://www.bilibili.com/"}, stream=True)
 
     with open('{path}/[{room_id}]{filename}.flv'.format(
-            path=path, 
-            room_id=r.roomid,  
-            filename=filename
-        ), 'wb') as f:
+        path=path,
+        room_id=r.roomid,
+        filename=filename
+    ), 'wb') as f:
         byteCount = 0
         now = datetime.datetime.now()
         nb = byteCount
@@ -231,10 +228,11 @@ def main():
             if liveStatus == 1:
                 print('[DD Monitor] \033[1;32m● {}\033[0m'.format('Live Start'))
                 try:
-                    recordLive(room, path)
+                    recordLive(path)
                     print('[DD Monitor] Live Closed')
                 except KeyboardInterrupt:
-                    print('\r\033[K[DD Monitor] \033[1;31m● Error\033[0m You Stoped Recording')
+                    print(
+                        '\r\033[K[DD Monitor] \033[1;31m● Error\033[0m You Stoped Recording')
             time.sleep(120)
         except KeyboardInterrupt:
             print('\r[DD Monitor] Monitor Stop')
