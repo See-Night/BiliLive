@@ -41,8 +41,6 @@ SOFTWARE.
 """
 
 
-
-
 import requests
 import time
 import os
@@ -50,6 +48,8 @@ import datetime
 import sys
 import getopt
 import json
+
+
 class Live:
     api = {
         "get_room_play_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getRoomPlayInfo?room_id={room_show_id}",
