@@ -190,7 +190,6 @@ def recordLive(path: str) -> None:
         }, 
         stream=True
     )
-
     with open('{path}/[{room_id}]{filename}.flv'.format(
         path=path,
         room_id=r.roomid,
