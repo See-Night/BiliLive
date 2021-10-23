@@ -1,3 +1,11 @@
 # Video 
 **/*.mp4
 **/*.flv
+
+# dist
+dist
+build
+
+# python
+__pycache__
+**/*.spec
