@@ -34,7 +34,7 @@ $ pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ### 2. 二进制安装
 
-访问[Releases]([Release DD Monitor · See-Night/BiliLive (github.com)](https://github.com/See-Night/BiliLive/releases/latest))，并下载符合你操作系统的文件。
+访问[Releases](https://github.com/See-Night/BiliLive/releases/latest)，并下载符合你操作系统的文件。
 
 ## 运行
 
