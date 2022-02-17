@@ -5,6 +5,7 @@
 # dist
 dist
 build
+icon/**
 
 # python
 __pycache__

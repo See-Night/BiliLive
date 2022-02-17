@@ -6,7 +6,7 @@
 # @License  : MIT
 
 
-"""DD Monitor —— a CLI script that record live stream automatically
+"""BiliLive —— a CLI script that record live stream automatically
 
 Params:
 + -r/--room :   Live room id
@@ -41,6 +41,7 @@ SOFTWARE.
 """
 
 
+from colorama import Fore, init
 import requests
 import time
 import os
@@ -48,6 +49,30 @@ import datetime
 import sys
 import getopt
 import json
+
+
+init(autoreset=True, wrap=True)
+
+
+room = None
+path = None
+opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
+try:
+    for opt, val in opts:
+        if opt in ("-r", "--room"):
+            room = val
+        if opt in ("-o", "--outpath"):
+            path = os.path.abspath(val)
+except getopt.GetoptError as e:
+    sys.exit()
+
+if room is None:
+    room = input("[Room ID]: ")
+if path is None:
+    path = input("[Save Path]: ")
+
+print('[Bili Live] Room ID ' + Fore.LIGHTWHITE_EX + room)
+print('[Bili Live] Output Path' + Fore.LIGHTWHITE_EX + path)
 
 
 class Live:
@@ -118,25 +143,8 @@ class Live:
         )['data']
         return res
 
-
-opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
-
-
-# 参数检测
-try:
-    for opt, val in opts:
-        if opt in ("-r", "--room"):
-            room = val
-            print('[DD Monitor] Room ID \033[1m{}\033[0m'.format(room))
-        if opt in ("-o", "--outpath"):
-            path = os.path.abspath(val)
-            print('[DD Monitor] Output Path \033[1m{}\033[0m'.format(path))
-except getopt.GetoptError as e:
-    sys.exit()
-
-
 r = Live(room)
-print('[DD Monitor] Monitor Start')
+print('[Bili Live] Monitor Start')
 
 
 def formatByte(Byte: str) -> str:
@@ -210,7 +218,7 @@ def recordLive(path: str) -> None:
                 speed = '{}/s'.format(formatByte(flow))
                 nb = byteCount
             print(
-                '[DD Monitor] Recorded {:>8s} @ {:15s}'.format(
+                '[Bili Live] Recorded {:>8s} @ {:15s}'.format(
                     stdout,
                     speed
                 ),
@@ -220,27 +228,26 @@ def recordLive(path: str) -> None:
             )
             f.write(data)
             f.flush()
-    print('[DD Monitor] Save to {}/{}.flv'.format(path, filename))
+    print('[Bili Live] Save to {}/{}.flv'.format(path, filename))
     return
 
 
 def main():
     global r
-    print('[DD Monitor] {:20s}'.format('Monitor is working'))
     while True:
         try:
             liveStatus = r.get_room_play_info()['live_status']
             if liveStatus == 1:
-                print('[DD Monitor] \033[1;32m● {}\033[0m'.format('Live Start'))
+                print('[Bili Live] ' + Fore.GREEN + '● {}'.format('Live Start'))
                 try:
                     recordLive(path)
-                    print('[DD Monitor] Live Closed')
+                    print('[Bili Live] Live Closed')
                 except KeyboardInterrupt:
                     print(
-                        '\r\033[K[DD Monitor] \033[1;31m● Error\033[0m You Stoped Recording')
+                        '\r[Bili Live] ' + Fore.RED + '● Error' + Fore.RESET + ' You Stoped Recording')
             time.sleep(120)
         except KeyboardInterrupt:
-            print('\r[DD Monitor] Monitor Stop')
+            print('\r[Bili Live] Monitor Stop')
             break
 
 
