@@ -61,5 +61,5 @@ $ python BiliLive -r 12235923 -o "D:\Video"
 
 > 脚本运行时不能关闭命令行，否则脚本会自动停止工作。
 
-
+![bililive](../public/bililive.gif)
 

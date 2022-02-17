@@ -72,7 +72,7 @@ if path is None:
     path = input("[Save Path]: ")
 
 print('[Bili Live] Room ID ' + Fore.LIGHTWHITE_EX + room)
-print('[Bili Live] Output Path' + Fore.LIGHTWHITE_EX + path)
+print('[Bili Live] Output Path ' + Fore.LIGHTWHITE_EX + path)
 
 
 class Live:
