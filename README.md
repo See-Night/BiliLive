@@ -16,7 +16,7 @@ BiliLive是一个基于Python的Bilibili直播自动录制脚本。
 git clone https://github.com/See-Night/BiliLive.git
 ```
 
-如果你对Git一无所知又不想了解，你可以直接从[这里](https://raw.githubusercontent.com/See-Night/BiliLive/master/BiliLive)下载脚本。
+如果你对Git一无所知又不想了解，你可以直接从[这里](https://github.com/See-Night/BiliLive/releases/latest)下载脚本。
 
 #### 安装依赖
 
