@@ -1,19 +1,23 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # @Time     : 2021/07/24
-# @Author   : See-Night
+# @Author   : SeeNight
 # @Blog     : https://1145141919810.wang
 # @License  : MIT
 
 
-"""BiliLive —— a CLI script that record live stream automatically
+"""BiliLive
+
+A CLI script that record live stream automatically
 
 Params:
-+ -r/--room :   Live room id
-+ -o/--outpath: Video save path
+* -r/--room :   Live room id
+* -o/--outpath: Video save path
 
 Example:
-$ ./Monitor -r 12235923 -o ~/videos
+```bash
+python ./BiliLive -r 12235923 -o ~/videos
+```
 """
 
 
