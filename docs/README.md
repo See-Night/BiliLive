@@ -8,7 +8,7 @@ BiliLive是一个基于Python的Bilibili直播自动录制脚本。
 
 ## 安装
 
-#### 获取脚本
+### 获取脚本
 
 如果你的设备上装有Git，你可以直接用Git从Github上将仓库克隆下来。
 
@@ -18,7 +18,7 @@ git clone https://github.com/See-Night/BiliLive.git
 
 如果你对Git一无所知又不想了解，你可以直接从[这里](https://github.com/See-Night/BiliLive/releases/latest)下载脚本。
 
-#### 安装依赖
+### 安装依赖
 
 BiliLive仅依赖于 `requests` 模块。
 
