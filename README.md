@@ -15,7 +15,7 @@ BiliLive提供脚本和二进制两种使用方法，择一即可。
 如果你的设备上装有Git，你可以直接用Git从Github上将仓库克隆下来。
 
 ```bash
-$ git clone https://github.com/See-Night/BiliLive.git
+git clone https://github.com/See-Night/BiliLive.git
 ```
 
 如果你对Git一无所知又不想了解，你可以直接从[这里](https://raw.githubusercontent.com/See-Night/BiliLive/master/BiliLive)下载脚本。
@@ -25,7 +25,7 @@ $ git clone https://github.com/See-Night/BiliLive.git
 BiliLive仅依赖于 `requests` 模块。
 
 ```bash
-$ pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 <small>在命令行中运行以上命令可以自动安装。</small>
@@ -36,12 +36,12 @@ BiliLive脚本采用纯命令行的形式工作，在使用之前你至少需要
 
 ```bash
 # 进入BiliLive所在的目录
-$ cd BiliLive
+cd BiliLive
 
 # 运行脚本
-$ python BiliLive.py -r <roomid> -o <outdir>
+python BiliLive.py -r <roomid> -o <outdir>
 # 或者
-$ python BiliLive.py
+python BiliLive.py
 ```
 
 - `roomid` ：直播间ID
@@ -54,7 +54,7 @@ $ python BiliLive.py
 **举个栗子**：
 
 ```bash
-$ python BiliLive -r 12235923 -o "D:\Video"
+python BiliLive -r 12235923 -o "D:\Video"
 ```
 
 这个命令让脚本监听 `12235923` 直播间，当开始直播以后进行录制，并保存到 `D:\Video` 路径下。
