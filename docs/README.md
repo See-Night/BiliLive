@@ -1,5 +1,3 @@
-# BiliLive
-
 [![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red)
 
 BiliLive 是一个基于 Python 的 Bilibili 直播自动录制脚本。
