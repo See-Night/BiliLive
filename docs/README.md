@@ -8,24 +8,22 @@ BiliLive是一个基于Python的Bilibili直播自动录制脚本。
 
 ## 安装
 
-BiliLive提供脚本和二进制两种使用方法，择一即可。
-
 #### 获取脚本
 
 如果你的设备上装有Git，你可以直接用Git从Github上将仓库克隆下来。
 
 ```bash
-$ git clone https://github.com/See-Night/BiliLive.git
+git clone https://github.com/See-Night/BiliLive.git
 ```
 
-如果你对Git一无所知又不想了解，你可以直接从[这里](https://raw.githubusercontent.com/See-Night/BiliLive/master/BiliLive)下载脚本。
+如果你对Git一无所知又不想了解，你可以直接从[这里](https://github.com/See-Night/BiliLive/releases/latest)下载脚本。
 
 #### 安装依赖
 
 BiliLive仅依赖于 `requests` 模块。
 
 ```bash
-$ pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 <small>在命令行中运行以上命令可以自动安装。</small>
@@ -36,12 +34,12 @@ BiliLive脚本采用纯命令行的形式工作，在使用之前你至少需要
 
 ```bash
 # 进入BiliLive所在的目录
-$ cd BiliLive
+cd BiliLive
 
 # 运行脚本
-$ python BiliLive.py -r <roomid> -o <outdir>
+python BiliLive.py -r <roomid> -o <outdir>
 # 或者
-$ python BiliLive.py
+python BiliLive.py
 ```
 
 - `roomid` ：直播间ID
@@ -54,12 +52,107 @@ $ python BiliLive.py
 **举个栗子**：
 
 ```bash
-$ python BiliLive -r 12235923 -o "D:\Video"
+python BiliLive.py -r 12235923 -o "D:\Video"
 ```
 
 这个命令让脚本监听 `12235923` 直播间，当开始直播以后进行录制，并保存到 `D:\Video` 路径下。
 
 > 脚本运行时不能关闭命令行，否则脚本会自动停止工作。
 
-![bililive](public/bililive.gif)
+![bililive](./public/bililive.gif)
 
+## Docker 部署
+
+对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。
+
+### Dockerfile
+
+```dockerfile
+from python:3.7.13-alpine3.15
+
+WORKDIR /app
+
+RUN mkdir video \
+	&& apk add git \
+	&& git clone https://github.com/See-Night/BiliLive.git \
+	&& cd BiliLive \
+	&& pip3 install requests
+
+ENTRYPOINT ["python3", "BiliLive.py", "-o", "/app/video", "-r"]
+```
+
+### 单个容器启动
+
+如果只需要启动单个容器，则直接创建一个容器即可。
+
+```bash
+docker run --name <container name> -v <local path>:/app/video -d bililive <room id>
+```
+
+- `container name` 容器名称，随便起个名字方便自己辨别即可
+- `local path` 录制视频的保存路径，此路径为设备本地路径
+- `room id` 直播间地址
+
+### 多个容器启动
+
+需要录制多个直播间的话建议用 shell 脚本进行启动。在启动脚本之前，你需要在脚本所在的目录下新建 `room_list.txt` 文件用来存储需要录制的直播间信息，其内容如下：
+
+```
+<room_id> <name>
+```
+
+- `room_id` 直播间地址
+- `name` 名称；此处的名称用来区分不同直播间，同时也会用于 Docker 容器的名称
+
+例如：
+
+```
+6 英雄联盟
+22632424 贝拉
+```
+
+#### shell 脚本
+
+此处将脚本命名为 `auto.sh`
+
+```bash
+#!/bin/bash
+# $1 control command
+# $2 the save path of recorded video
+
+if [ $# -ne 0 ]; then
+    if [[ $1 == "start" && $# -eq 2 ]]; then
+        cat room_list.txt | while read room_id container_name
+        do
+            docker run --name $container_name -v $2:/app/video -d bililive $room_id
+        done
+    elif [ $1 == "stop" ]; then
+        cat room_list.txt | while read room_id container_name
+        do
+            docker stop $container_name
+            docker rm $container_name
+        done
+    fi
+fi
+```
+
+#### 执行
+
+```bash
+# 给脚本添加运行权限
+chmod u+x auto.sh
+
+# 启动录制
+./auto.sh start <local path>
+
+# 关闭录制
+./auto.sh stop
+```
+
+* `local path` 录制的视频存储的路径
+
+如果要单独关闭某个直播间的录制，请单独关闭 Docker 容器。
+
+## 致谢
+
+感谢 [lovelyyoshino](https://github.com/lovelyyoshino) 和 [fython](https://github.com/fython) 等大佬整理和总结的B站 API，省去了我不少开发工作。
