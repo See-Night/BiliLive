@@ -8,8 +8,6 @@ BiliLive是一个基于Python的Bilibili直播自动录制脚本。
 
 ## 安装
 
-BiliLive提供脚本和二进制两种使用方法，择一即可。
-
 #### 获取脚本
 
 如果你的设备上装有Git，你可以直接用Git从Github上将仓库克隆下来。
