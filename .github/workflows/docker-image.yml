@@ -28,6 +28,5 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
-
       - name: Push image to Github
         run: docker push ghcr.io/${{ github.actor }}/bililive:1.0
