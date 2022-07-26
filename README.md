@@ -20,10 +20,10 @@ git clone https://github.com/See-Night/BiliLive.git
 
 ### 安装依赖
 
-BiliLive仅依赖于 `requests` 模块。
+BiliLive 依赖 `requests` 和 `colorama` 模块。
 
 ```bash
-pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
 ```
 
 <small>在命令行中运行以上命令可以自动安装。</small>
@@ -63,23 +63,7 @@ python BiliLive.py -r 12235923 -o "D:\Video"
 
 ## Docker 部署
 
-对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。
-
-### Dockerfile
-
-```dockerfile
-from python:3.7.13-alpine3.15
-
-WORKDIR /app
-
-RUN mkdir video \
-	&& apk add git \
-	&& git clone https://github.com/See-Night/BiliLive.git \
-	&& cd BiliLive \
-	&& pip3 install requests
-
-ENTRYPOINT ["python3", "BiliLive.py", "-o", "/app/video", "-r"]
-```
+对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。您可以使用库中的 `Dockerfile` 直接构建 Docker 容器，或者从 Github 上直接拉取我构建好的镜像。
 
 ### 单个容器启动
 
@@ -124,13 +108,12 @@ if [ $# -ne 0 ]; then
     if [[ $1 == "start" && $# -eq 2 ]]; then
         cat room_list.txt | while read room_id container_name
         do
-            docker run --name $container_name -v $2:/app/video -d bililive $room_id
+            docker run --name $container_name -v `readlink -f $2`:/app/video -d bililive $room_id
         done
     elif [ $1 == "stop" ]; then
         cat room_list.txt | while read room_id container_name
         do
-            docker stop $container_name
-            docker rm $container_name
+            docker rm `docker stop $container_name`
         done
     fi
 fi
