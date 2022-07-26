@@ -15,8 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag seenight/bililive
+      run: docker build . --file Dockerfile --tag seenight/bililive:1.0
     - name: login docker hub
       run: docker login --username=${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_PASSWORD }}
     - name: Push image to docker hub
-      run: docker push seenight/bililive
+      run: docker push seenight/bililive:1.0
