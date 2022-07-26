@@ -28,4 +28,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
+<<<<<<< HEAD
       - run: docker push ghcr.io/${{ github.actor }}/bililive:1.0
+=======
+      - name: Push image to Github
+        run: docker push ghcr.io/${{ github.actor }}/bililive:1.0
+>>>>>>> 0ce1f30 (Action)
