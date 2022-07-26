@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/${{ github.actor }}/bililive:1.0
+      run: docker build . --file Dockerfile --tag ghcr.io/seenight/bililive:1.0
   
   push:
     
@@ -29,4 +29,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
       - name: Push image to Github
-        run: docker push ghcr.io/${{ github.actor }}/bililive:1.0
+        run: docker push ghcr.io/seenight/bililive:1.0
