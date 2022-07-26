@@ -63,14 +63,18 @@ python BiliLive.py -r 12235923 -o "D:\Video"
 
 ## Docker 部署
 
-对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。您可以使用库中的 `Dockerfile` 直接构建 Docker 容器，或者从 Github 上直接拉取我构建好的镜像。
+对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。您可以使用库中的 `Dockerfile` 直接构建 Docker 容器，或者从 [Docker Hub](https://hub.docker.com/repository/docker/seenight/bililive) 上直接拉取我构建好的镜像：
+
+```bash
+docker pull seenight/bililive
+```
 
 ### 单个容器启动
 
 如果只需要启动单个容器，则直接创建一个容器即可。
 
 ```bash
-docker run --name <container name> -v <local path>:/app/video -d bililive <room id>
+docker run --name <container name> -v <local path>:/app/video -d seenight/bililive <room id>
 ```
 
 - `container name` 容器名称，随便起个名字方便自己辨别即可
@@ -86,40 +90,16 @@ docker run --name <container name> -v <local path>:/app/video -d bililive <room 
 ```
 
 - `room_id` 直播间地址
-- `name` 名称；此处的名称用来区分不同直播间，同时也会用于 Docker 容器的名称
+- `name` 名称；此处的名称用来区分不同直播间，同时也会用于 Docker 容器的名称；**此处不可以使用汉字**
 
 例如：
 
 ```
-6 英雄联盟
-22632424 贝拉
+6 LOL
+22384516 umy
 ```
 
-#### shell 脚本
-
-此处将脚本命名为 `auto.sh`
-
-```bash
-#!/bin/bash
-# $1 control command
-# $2 the save path of recorded video
-
-if [ $# -ne 0 ]; then
-    if [[ $1 == "start" && $# -eq 2 ]]; then
-        cat room_list.txt | while read room_id container_name
-        do
-            docker run --name $container_name -v `readlink -f $2`:/app/video -d bililive $room_id
-        done
-    elif [ $1 == "stop" ]; then
-        cat room_list.txt | while read room_id container_name
-        do
-            docker rm `docker stop $container_name`
-        done
-    fi
-fi
-```
-
-#### 执行
+在创建好 `room_list.txt` 以后，执行 `auto.sh` 脚本即可启动、关闭直播录制：
 
 ```bash
 # 给脚本添加运行权限
