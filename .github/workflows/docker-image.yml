@@ -16,7 +16,14 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag seenight/bililive:1.0
+  
+  push:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
     - name: login docker hub
-      run: docker login --username=${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_PASSWORD }}
+      run: echo ${{ secrets.PASSWORD }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
     - name: Push image to docker hub
       run: docker push seenight/bililive:1.0
