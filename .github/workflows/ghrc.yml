@@ -1,4 +1,4 @@
-name: BiliLive
+name: Push docker image to ghrc.io
 
 on:
   push:

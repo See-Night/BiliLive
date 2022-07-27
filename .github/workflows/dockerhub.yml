@@ -1,4 +1,4 @@
-name: BiliLive
+name: Push docker image to docker hub
 
 on:
   push:
