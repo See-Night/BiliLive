@@ -1,6 +1,6 @@
 # BiliLive
 
-[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red)
+[![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red) [![Gitter](https://badges.gitter.im/See-Night/BiliLive.svg)](https://gitter.im/See-Night/BiliLive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 BiliLive 是一个基于 Python 的 Bilibili 直播自动录制脚本。
 
@@ -115,6 +115,10 @@ chmod u+x auto.sh
 * `local path` 录制的视频存储的路径
 
 如果要单独关闭某个直播间的录制，请单独关闭 Docker 容器。
+
+## FAQ
+
+如果在使用中遇到什么问题请到 [Gitter](https://gitter.im/See-Night/BiliLive?utm_source=share-link&utm_medium=link&utm_campaign=share-link) 提问交流。
 
 ## LINCENSE
 
