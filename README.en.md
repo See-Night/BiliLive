@@ -150,4 +150,4 @@ SOFTWARE.
 
 ## Thanks
 
-Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the B stand API, saves me a lot of development work.
+Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the BiliBili API, saves me a lot of development work.

@@ -1,5 +1,3 @@
-# BiliLive
-
 [![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red) [![Gitter](https://badges.gitter.im/See-Night/BiliLive.svg)](https://gitter.im/See-Night/BiliLive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 📕[中文说明](./README.md) | English Readme
@@ -150,4 +148,4 @@ SOFTWARE.
 
 ## Thanks
 
-Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the B stand API, saves me a lot of development work.
+Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the BiliBili API, saves me a lot of development work.
