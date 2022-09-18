@@ -30,7 +30,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
 
 <small>Run the above commands from the command line to automatically install.</small>
 
-## 运行
+## Run
 
 BiliLive scripts work as pure command lines, and you need to know at least a little bit about **path**s before using them. You can double-click to run it, or you can run it as a command line + argument. The following describes how to run the command line.
 
