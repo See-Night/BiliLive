@@ -1,3 +1,5 @@
+# BiliLive
+
 [![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red) [![Gitter](https://badges.gitter.im/See-Night/BiliLive.svg)](https://gitter.im/See-Night/BiliLive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 📕[中文说明](./README.md) | English Readme
@@ -59,7 +61,7 @@ This command tells the script to listen to the `12235923` live broadcast room, r
 
 > Do not close the command line while the script is running; otherwise, the script will automatically stop working.
 
-![bililive](./public/bililive.gif)
+![bililive](D:\Program\BiliLive\public\bililive.gif)
 
 ## Docker deployment
 
@@ -118,7 +120,7 @@ If you want to turn off recording for a live studio separately, close the Docker
 
 ## FAQ
 
-If you encounter any problems, please go to [Gitter](https://gitter.im/See-Night/BiliLive? Utm_source = share-link&UTM _medium= link&UTM _campaign=share-link).
+If you encounter any problems, please go to [Gitter](https://gitter.im/See-Night/BiliLive?Utmsource=share-link&UTMmedium=link&UTMcampaign=share-link).
 
 ## LINCENSE
 
@@ -148,4 +150,4 @@ SOFTWARE.
 
 ## Thanks
 
-Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython), and others to sort out and summarize the B stand API, saves me a lot of development work.
+Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the B stand API, saves me a lot of development work.

@@ -120,7 +120,7 @@ If you want to turn off recording for a live studio separately, close the Docker
 
 ## FAQ
 
-If you encounter any problems, please go to [Gitter](https://gitter.im/See-Night/BiliLive? Utm_source = share-link&UTM _medium= link&UTM _campaign=share-link).
+If you encounter any problems, please go to [Gitter](https://gitter.im/See-Night/BiliLive?Utmsource=share-link&UTMmedium=link&UTMcampaign=share-link).
 
 ## LINCENSE
 
@@ -150,4 +150,4 @@ SOFTWARE.
 
 ## Thanks
 
-Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython), and others to sort out and summarize the B stand API, saves me a lot of development work.
+Thank [lovelyyoshino](https://github.com/lovelyyoshino) and [fython](https://github.com/fython) and others to sort out and summarize the B stand API, saves me a lot of development work.
