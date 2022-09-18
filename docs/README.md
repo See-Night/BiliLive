@@ -120,7 +120,7 @@ chmod u+x auto.sh
 
 如果在使用中遇到什么问题请到 [Gitter](https://gitter.im/See-Night/BiliLive?utm_source=share-link&utm_medium=link&utm_campaign=share-link) 提问交流。
 
-## LINCENSE
+## LICENSE
 
 ```
 MIT License

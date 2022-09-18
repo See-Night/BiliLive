@@ -122,7 +122,7 @@ If you want to turn off recording for a live studio separately, close the Docker
 
 If you encounter any problems, please go to [Gitter](https://gitter.im/See-Night/BiliLive?Utmsource=share-link&UTMmedium=link&UTMcampaign=share-link).
 
-## LINCENSE
+## LICENSE
 
 ```
 MIT License
