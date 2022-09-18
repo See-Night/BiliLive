@@ -1,5 +1,7 @@
 [![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red) [![Gitter](https://badges.gitter.im/See-Night/BiliLive.svg)](https://gitter.im/See-Night/BiliLive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+📕中文说明 | [English Readme](./README.en.md)
+
 BiliLive 是一个基于 Python 的 Bilibili 直播自动录制脚本。
 
 <strong style="color: red;">注意：</strong>在使用之前请确保你的设备上已经安装了 [Python](https://python.org) 环境。
@@ -18,10 +20,10 @@ git clone https://github.com/See-Night/BiliLive.git
 
 ### 安装依赖
 
-BiliLive仅依赖于 `requests` 模块。
+BiliLive 依赖 `requests` 和 `colorama` 模块。
 
 ```bash
-pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
 ```
 
 <small>在命令行中运行以上命令可以自动安装。</small>
