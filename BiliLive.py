@@ -12,38 +12,13 @@ A CLI script that record live stream automatically
 
 Params:
 * -r/--room :   Live room id
-* -o/--outpath: Video save path
+* -o/--output:  Video save path
 
 Example:
 ```bash
 python ./BiliLive -r 12235923 -o ~/videos
 ```
 """
-
-
-"""MIT License
-
-Copyright (c) 2021 See-Night
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
 
 from colorama import Fore, init
 import requests
@@ -57,16 +32,34 @@ import json
 
 init(autoreset=True, wrap=True)
 
-
+# Initialization parameters
 room = None
 path = None
-opts, args = getopt.getopt(sys.argv[1:], "r:o:", ["room=", "outpath="])
+
+# Get version
+with open("./version.json", "r", encoding="utf8") as f:
+    data = json.load(f)
+    version = data["version"]
+    description = data["description"]
+
+opts, args = getopt.getopt(sys.argv[1:], "r:o:h", ["room=", "output=", "help"])
 try:
     for opt, val in opts:
         if opt in ("-r", "--room"):
             room = val
-        if opt in ("-o", "--outpath"):
+        if opt in ("-o", "--output"):
             path = os.path.abspath(val)
+        if opt in ("-h", "--help"):
+            print("")
+            print("BiliLive version {version}".format(version=version))
+            print(description)
+            print("")
+            print("Usage: python BiliLive.py [-r | --room] [-o | --output] [-h | --help]")
+            print("Parameters:")
+            print("  -r, --room <room id>\t\tLive room id")
+            print("  -o, --output <save path>\tVideo save path")
+            print("")
+            sys.exit()
 except getopt.GetoptError as e:
     sys.exit()
 
