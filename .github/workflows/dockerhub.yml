@@ -14,8 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Get Version
-      run: VERSION=`cat version.json | jq .version | sed s/\"//g`
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag seenight/bililive:`cat version.json | jq .version | sed s/\"//g`
     - name: Login to Docker hub
