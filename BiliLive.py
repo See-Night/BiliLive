@@ -12,7 +12,7 @@ A CLI script that record live stream automatically
 
 Params:
 * -r/--room :   Live room id
-* -o/--output:  Video save path
+* -o/--outdir:  Video save path
 
 Example:
 ```bash
@@ -42,22 +42,22 @@ with open("./version.json", "r", encoding="utf8") as f:
     version = data["version"]
     description = data["description"]
 
-opts, args = getopt.getopt(sys.argv[1:], "r:o:h", ["room=", "output=", "help"])
+opts, args = getopt.getopt(sys.argv[1:], "r:o:h", ["room=", "outdir=", "help"])
 try:
     for opt, val in opts:
         if opt in ("-r", "--room"):
             room = val
-        if opt in ("-o", "--output"):
+        if opt in ("-o", "--outdir"):
             path = os.path.abspath(val)
         if opt in ("-h", "--help"):
             print("")
             print("BiliLive version {version}".format(version=version))
             print(description)
             print("")
-            print("Usage: python BiliLive.py [-r | --room] [-o | --output] [-h | --help]")
+            print("Usage: python BiliLive.py [-r | --room] [-o | --outdir] [-h | --help]")
             print("Parameters:")
             print("  -r, --room <room id>\t\tLive room id")
-            print("  -o, --output <save path>\tVideo save path")
+            print("  -o, --outdir <save path>\tVideo save path")
             print("")
             sys.exit()
 except getopt.GetoptError as e:
@@ -69,7 +69,7 @@ if path is None:
     path = input("[Save Path]: ")
 
 print('[Bili Live] Room ID ' + Fore.LIGHTWHITE_EX + room)
-print('[Bili Live] Output Path ' + Fore.LIGHTWHITE_EX + path)
+print('[Bili Live] Outdir Path ' + Fore.LIGHTWHITE_EX + path)
 
 
 class Live:

@@ -2,6 +2,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.6+-blue)](https://python.org) ![MIT](https://img.shields.io/badge/Licence-MIT-red) [![Gitter](https://badges.gitter.im/See-Night/BiliLive.svg)](https://gitter.im/See-Night/BiliLive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+📕中文说明 | [English Readme](./README.en.md)
+
 BiliLive 是一个基于 Python 的 Bilibili 直播自动录制脚本。
 
 <strong style="color: red;">注意：</strong>在使用之前请确保你的设备上已经安装了 [Python](https://python.org) 环境。
