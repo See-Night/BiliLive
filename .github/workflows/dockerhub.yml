@@ -22,4 +22,4 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
     - name: Push image to Docker hub
-      run: docker push seenight/bililive:1.0
+      run: docker push seenight/bililive:`cat version.json | jq .version | sed s/\"//g`
