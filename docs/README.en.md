@@ -63,7 +63,7 @@ This command tells the script to listen to the `12235923` live broadcast room, r
 
 ## Docker deployment
 
-For users who have a large number of live broadcast recording needs, batch and automated recording programs are very important. Only a Docker-based deployment scheme is proposed here for reference. You can build a Docker container directly using 'Dockerfile' in the library, Or from [Docker Hub](https://hub.docker.com/repository/docker/seenight/bililive) directly pull I build a good image:
+For users who have a large number of live broadcast recording needs, batch and automated recording programs are very important. Only a Docker-based deployment scheme is proposed here for reference. You can build a Docker container directly using `Dockerfile` in the library, Or from [Docker Hub](https://hub.docker.com/repository/docker/seenight/bililive) directly pull I build a good image:
 
 ```bash
 docker pull seenight/bililive
@@ -83,7 +83,7 @@ docker run --name <container name> -v <local path>:/app/video -d seenight/bilili
 
 ### Multiple container startup
 
-If you need to record multiple broadcast rooms, you are advised to start with a shell script. Before starting the script, you need to create a new `room_list. TXT` file in the directory where the script is located to store the recorded studio information. The contents are as follows:
+If you need to record multiple broadcast rooms, you are advised to start with a shell script. Before starting the script, you need to create a new `room_list.txt` file in the directory where the script is located to store the recorded studio information. The contents are as follows:
 
 ```
 <room_id> <name>
@@ -92,7 +92,7 @@ If you need to record multiple broadcast rooms, you are advised to start with a 
 - `room_id` Live room id
 - `name` name; The name here is used to distinguish different broadcasting rooms, and will also be used for the name of Docker container
 
-For example:
+*For example*:
 
 ```
 6 LOL
