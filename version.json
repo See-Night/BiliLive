@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "1.1",
     "description": "A CLI script that record live stream automatically",
     "repositories": {
         "github": "https://github.com/See-Night/BiliLive"
