@@ -65,7 +65,7 @@ python BiliLive.py -r 12235923 -o "D:\Video"
 
 ## Docker 部署
 
-对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。您可以使用库中的 `Dockerfile` 直接构建 Docker 容器，或者从 [Docker Hub](https://hub.docker.com/repository/docker/seenight/bililive) 上直接拉取我构建好的镜像：
+对于有大量直播录制需求的用户而言，批量、自动化的录制程序是非常重要的，此处仅提出一种基于 Docker 的部署方案以供参考。您可以使用库中的 `Dockerfile` 直接构建 Docker 容器，或者从 [Docker Hub](https://hub.docker.com/r/seenight/bililive) 上直接拉取我构建好的镜像：
 
 ```bash
 docker pull seenight/bililive

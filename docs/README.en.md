@@ -63,7 +63,7 @@ This command tells the script to listen to the `12235923` live broadcast room, r
 
 ## Docker deployment
 
-For users who have a large number of live broadcast recording needs, batch and automated recording programs are very important. Only a Docker-based deployment scheme is proposed here for reference. You can build a Docker container directly using `Dockerfile` in the library, Or from [Docker Hub](https://hub.docker.com/repository/docker/seenight/bililive) directly pull I build a good image:
+For users who have a large number of live broadcast recording needs, batch and automated recording programs are very important. Only a Docker-based deployment scheme is proposed here for reference. You can build a Docker container directly using `Dockerfile` in the library, Or from [Docker Hub](https://hub.docker.com/r/seenight/bililive) directly pull I build a good image:
 
 ```bash
 docker pull seenight/bililive
@@ -77,7 +77,7 @@ If you only need to start a single container, you can simply create one.
 docker run --name <container name> -v <local path>:/app/video -d seenight/bililive <room id>
 ```
 
-- `container name` Container name, just give yourself a name to identify it
+- `container name` Container name, just customize a name
 - `local path` The video recording path is a local path on the device
 - `room id` Live room id
 
