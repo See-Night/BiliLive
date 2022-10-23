@@ -59,7 +59,7 @@ This command tells the script to listen to the `12235923` live broadcast room, r
 
 > Do not close the command line while the script is running; otherwise, the script will automatically stop working.
 
-![bililive](D:\Program\BiliLive\public\bililive.gif)
+![bililive](.\public\bililive.gif)
 
 ## Docker deployment
 
