@@ -10,3 +10,6 @@ icon/**
 # python
 __pycache__
 **/*.spec
+
+# vscode
+.vscode
