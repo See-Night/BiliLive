@@ -50,15 +50,15 @@ try:
         if opt in ("-o", "--outdir"):
             path = os.path.abspath(val)
         if opt in ("-h", "--help"):
-            print("")
-            print("BiliLive version {version}".format(version=version))
-            print(description)
-            print("")
-            print("Usage: python BiliLive.py [-r | --room] [-o | --outdir] [-h | --help]")
-            print("Parameters:")
-            print("  -r, --room <room id>\t\tLive room id")
-            print("  -o, --outdir <save path>\tVideo save path")
-            print("")
+            print("""
+BiliLive version {version}
+{description}
+
+Usage: python BiliLive.py [-r | --room] [-o | --outdir] [-h | --help]
+Parameters:
+  -r, --room <room id>\t\tLive room id
+  -o, --outdir <save path>\tVideo save path
+""".format(version=version, description=description))
             sys.exit()
 except getopt.GetoptError as e:
     sys.exit()
