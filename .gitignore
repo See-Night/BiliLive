@@ -16,3 +16,6 @@ __pycache__
 
 # python venv
 .venv
+
+# sign file
+*.asc
