@@ -20,6 +20,6 @@ jobs:
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Push image to Docker hub
       run: docker push seenight/bililive:`cat version.json | jq .version | sed s/\"//g`
