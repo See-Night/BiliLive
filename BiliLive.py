@@ -79,6 +79,10 @@ class Live:
         "get_room_info": "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id={room_id}"
     }
 
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+
     def __init__(self, roomid: str):
         """Initialize the Live class
 
@@ -102,7 +106,7 @@ class Live:
             requests.get(
                 self.api["get_room_play_info"].format(
                     room_show_id=self.roomid
-                )
+                ), headers= self.headers
             ).text
         )['data']
         return res
@@ -120,7 +124,7 @@ class Live:
             requests.get(
                 self.api["get_room_play_url"].format(
                     room_id=self.roomid
-                )
+                ), headers= self.headers
             ).text
         )['data']
         return res
@@ -135,7 +139,7 @@ class Live:
             requests.get(
                 self.api["get_room_info"].format(
                     room_id=self.roomid
-                )
+                ), headers= self.headers
             ).text
         )['data']
         return res
