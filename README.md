@@ -24,6 +24,15 @@ git clone https://github.com/See-Night/BiliLive.git
 
 BiliLive 依赖 `requests` 和 `colorama` 模块。
 
+对于 Python 3.11 及以上的版本，你可能需要通过 venv 虚拟环境来安装依赖模块；或者通过其他手段屏蔽 `This environment is externally managed` 的警告。详情请自行查阅官方文档，或其他网络资料。
+
+```bash
+python -m venv .venv
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
+```
+
+对于 Python 3.11 以下的版本，或者已经屏蔽掉以上报错的版本，你可以直接安装依赖模块。
+
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
 ```

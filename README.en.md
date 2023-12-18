@@ -24,6 +24,15 @@ If you don't know anything about Git and don't want to know, you can directly do
 
 Bilive relies on the `requests` and `colorama` modules.
 
+For Python 3.11+, you may need to install requirments in venv environment. Or you can ignore `externally-managed-environment` warning. Please check the official documents or consult online materials.
+
+```bash
+python -m venv .venv
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
+```
+
+For Python 3.10-, you can install requirments directly.
+
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests colorama
 ```
