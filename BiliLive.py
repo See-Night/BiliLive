@@ -63,10 +63,13 @@ Parameters:
 except getopt.GetoptError as e:
     sys.exit()
 
-if room is None:
-    room = input("[Room ID]: ")
-if path is None:
-    path = input("[Save Path]: ")
+try:
+    if room is None:
+        room = input("[Room ID]: ")
+    if path is None:
+        path = input("[Save Path]: ")
+except KeyboardInterrupt:
+    sys.exit()
 
 print('[Bili Live] Room ID ' + Fore.LIGHTWHITE_EX + room)
 print('[Bili Live] Outdir Path ' + Fore.LIGHTWHITE_EX + path)
