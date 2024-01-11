@@ -48,9 +48,10 @@ BiliLive脚本采用纯命令行的形式工作，在使用之前你至少需要
 cd BiliLive
 
 # 运行脚本
-python BiliLive.py -r <roomid> -o <outdir>
-# 或者
-python BiliLive.py
+## Windows:
+python biliLive -r <roomid> -o <outdir>
+## Linux/Unix:
+./bililive -r <roomid> -o <outdir>
 ```
 
 - `roomid` ：直播间ID
@@ -63,7 +64,7 @@ python BiliLive.py
 **举个栗子**：
 
 ```bash
-python BiliLive.py -r 12235923 -o "D:\Video"
+./bililive -r 12235923 -o "D:\Video"
 ```
 
 这个命令让脚本监听 `12235923` 直播间，当开始直播以后进行录制，并保存到 `D:\Video` 路径下。
@@ -71,6 +72,8 @@ python BiliLive.py -r 12235923 -o "D:\Video"
 > 脚本运行时不能关闭命令行，否则脚本会自动停止工作。
 
 ![bililive](./public/bililive.gif)
+
+建议用户直接将 `bililive` 加入到环境变量（Windows）或者将 `bililive` 可执行文件移动到 `/usr/local/bin`。
 
 ## Docker 部署
 
