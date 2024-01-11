@@ -48,9 +48,10 @@ BiliLive scripts work as pure command lines, and you need to know at least a lit
 cd BiliLive
 
 # Run the script
-python BiliLive.py -r <roomid> -o <outdir>
-# Or
-python BiliLive.py
+## Windows:
+python biliLive -r <roomid> -o <outdir>
+## Linux/Unix:
+./bililive -r <roomid> -o <outdir>
 ```
 
 - `roomid` ：Live room ID
@@ -71,6 +72,8 @@ This command tells the script to listen to the `12235923` live broadcast room, r
 > Do not close the command line while the script is running; otherwise, the script will automatically stop working.
 
 ![bililive](./public/bililive.gif)
+
+It is recommended that the user add `bililive` directly to the environment variable (Windows) or move the `bililive` executable to `/usr/local/bin`.
 
 ## Docker deployment
 
