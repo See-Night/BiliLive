@@ -7,4 +7,4 @@ RUN mkdir video \
 
 COPY ./biliLive .
 
-ENTRYPOINT ["python3", "/app/biliLive", "-o", "/app/video", "-r"]
+ENTRYPOINT ["python3", "bililive", "-o", "/app/video", "-r"]
