@@ -5,6 +5,6 @@ WORKDIR /app
 RUN mkdir video \
     && pip3 install requests colorama
 
-COPY ./biliLive .
+COPY ./bililive .
 
 ENTRYPOINT ["python3", "bililive", "-o", "/app/video", "-r"]
