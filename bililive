@@ -30,11 +30,12 @@ import getopt
 import json
 
 
+
 init(autoreset=True, wrap=True)
 
 # Initialization parameters
-room = None
-path = None
+room = ""
+path = ""
 
 # Get version
 with open("./version.json", "r", encoding="utf8") as f:
@@ -60,7 +61,7 @@ Parameters:
   -o, --outdir <save path>\tVideo save path
 """.format(version=version, description=description))
             sys.exit()
-except getopt.GetoptError as e:
+except getopt.GetoptError:
     sys.exit()
 
 try:
@@ -151,11 +152,11 @@ r = Live(room)
 print('[Bili Live] Monitor Start')
 
 
-def formatByte(Byte: str) -> str:
+def formatByte(Byte: int) -> str:
     """ Format bytes as easy-to-read values
 
-    If you have a long bytes value, e.g., 516789154431byte, 
-    it looks diffcult to read. So it needs to be formated 
+    If you have a long bytes value, e.g., 516789154431byte,
+    it looks diffcult to read. So it needs to be formated
     into an easy-to-read form.
 
     Args:
@@ -195,11 +196,11 @@ def recordLive(path: str) -> None:
         title, datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
 
     response = requests.get(
-        url, 
+        url,
         headers={
-            "User-Agent": "Mozilla/5.0", 
+            "User-Agent": "Mozilla/5.0",
             "Referer": "https://www.bilibili.com/"
-        }, 
+        },
         stream=True
     )
     with open('{path}/[{room_id}]{filename}.flv'.format(
